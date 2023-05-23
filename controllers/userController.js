@@ -21,6 +21,7 @@ const registerUser = asyncHandler( async(req, res) =>{
     res.json({message: "Register the user"});
 });
 
+
 const loginUser = asyncHandler( async(req, res) =>{
     const {email, password} = req.body;
     if(!email || !password){
@@ -35,7 +36,8 @@ const loginUser = asyncHandler( async(req, res) =>{
             email: user.email,
             id: user.id,
            }, 
-        }, process.env.ACCESS_TOKEN_SECRET
+        }, process.env.ACCESS_TOKEN_SECRET,
+        {expiresIn: "1m"}
         );
         res.status(200).json({accessToken});
     }else{
