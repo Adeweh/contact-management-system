@@ -10,10 +10,16 @@ const validateToken = asyncHandler( async(req, res) =>{
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET , (err, decoded) =>{
         if(err){
             res.status(401);
-            throw new Error("User not authorized")
+            throw new Error("User not authorized");
         }
-        console.log(decoded);
+        req.user = decoded.user;
+        next();
+      
     });
+    if (!token){
+        res.status(401);
+        throw new Error("User not authorized or token missing")
+    }
     }
 });
 
